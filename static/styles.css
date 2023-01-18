@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 
+/* COLOR PALETTE GENERATED AT https://coolors.co/0d3b66-faf0ca-f4d35e-ee964b-f95738 */
+
+
 *{
     list-style: none;
     text-decoration: none;
@@ -7,25 +10,27 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Open Sans', sans-serif;
+    transition: all 0.5s ease;
 }
 
 body{
-    background: #dae0ca;
+    background: #0D3B66;
 }
 
 .wrapper .sidebar{
-    background: rgb(124, 139, 86);
+    background: #FAF0CA;
     position: fixed;
     width: 225px;
     height: 100%;
     transition: all 0.5s ease;
-    border-right: solid black 1px;
+    border-right: solid #F95738 5px;
     align-content: center;
+    transition: all 0.5s ease;
 }
 
 .active {
     text-decoration: none;
-    color: white;
+    color: #262626;
 }
 
 .mainlink {
@@ -42,7 +47,7 @@ body{
 
 .link {
     text-decoration: none;
-    color: black;
+    color: #FAF0CA;
 }
 
 .link:hover {
@@ -53,9 +58,9 @@ body{
     top: 0;
     padding: 10px;
     height: fit-content;
-    background-color: rgba(221, 213, 143, 0.842);
-    border-radius: 50%;
-    border: 1px solid black;
+    background-color: #EE964B;
+    border-radius: 10%;
+    border: 3px solid black;
     text-align: center;
     color: white;
     width: 75%;
@@ -73,43 +78,42 @@ body{
 
 .wrapper .sidebar ul li a {
     display: block;
-    padding-left: 0;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid black;
+    padding: 13px 30px;
+    border-bottom: 1px solid #F95738;
     position: relative;
     font-size: 16px;
 }
 
+.wrapper .sidebar ul li a .icon {
+    display: inline-block;
+}
+
 .active:hover {
-    color: black;
+    color: #B3001B;
 }
 
 .content {
-    display: flex;
-    align-items: center;
     margin-left: 225px;
+    width: calc(100% - 225px);
 }
 
-footer {
+#footer {
     text-align:center;
     margin-bottom: 0;
-    margin-left: 225px;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.137);
+    background-color: #ee974b62;
     position: absolute;
-    bottom: 0;
+    bottom: 0px;
 }
 
 .registration_fields {
-    margin-left: 10%;
-    margin-right: 50%;
-    margin-top: 25px;
+    margin-left: 50%;
+    margin-top: 10%;
     height: fit-content;
+    width: fit-content;
     padding: 20px;
     border-radius: 10%;
-    border: 2px solid rgb(121, 116, 78);
-    background-color: rgba(221, 213, 143, 0.842);
+    border: 2px solid #F95738;
+    background-color: #FAF0CA;
 }
 
 button {
@@ -117,11 +121,76 @@ button {
     border-radius: 15%;
     font-family: 'Open Sans', sans-serif;
     font-size: 15px;
-    background-color: rgba(255, 253, 127, 0.678);
-    border-color: rgb(121, 116, 78)
+    background-color: #FAF0CA;
+    border-color: #F95738;
+    transition: 0.5s;
+}
+
+button:hover {
+    background-color: #F95738;
+    color: #FAF0CA;
+    transition: 0.5s;
 }
 
 .tbox {
     padding-left: 5px;
+    border: 1px solid #F95738;
+    color: #292929;
+    background-color: rgba(255, 255, 255, 0.637);
+}
 
+.tbox:placeholder {
+    color: #faf0ca91;
+}
+
+.box {
+    top: 50px;
+    width: 100%;
+    margin-left: calc(100% - 225);
+    width: calc(100% - 30px - 225px);
+}
+
+.wrapper .content {
+    width: calc(100% - 225px);
+    padding: 15px;
+    margin-left: 225px;
+    transition: all 0.5s ease;
+}
+
+.contents {
+    width: calc(100% - 225px);
+    padding: 15px;
+    margin-left: 225px;
+    transition: all 0.5s ease;
+}
+
+.wrapper .content .top_navbar{
+    background: rgba(247, 8, 255, 0);
+    height: 50px;
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+}
+
+.wrapper .content .top_navbar .hamburger a{
+    font-size: 28px;
+    color: #f4fbff;
+}
+
+.wrapper .content .top_navbar .hamburger a:hover {
+    color: #a2ecff;
+}
+
+body.active .wrapper .sidebar{
+    left: -225px;
+}
+
+body.active .contents{
+    margin-left: 0;
+    width: 100%;
+}
+
+body.active .content{
+    margin-left: 0;
+    width: 100%
 }

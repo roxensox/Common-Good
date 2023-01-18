@@ -24,6 +24,7 @@
                     <p><a href="/"><img id="logo" src="/static/images/ProjectLogo.png" alt="Home"></a></p>
                 </div>
                 <ul>
+                    <!-- Menu item-->
                     <li>
                         <a href="/" class="active">
                             <span class="icon"><i class="fa-solid fa-house"></i></span>
@@ -55,15 +56,30 @@
                         </a>
                     </li>
                 </ul>
-                <!-- Menu item-->
+            </div>
+            <div class="content">
+                <div class="top_navbar">
+                    <div class="hamburger">
+                        <a href="#">
+                            <i class="fa-solid fa-bars"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="content">
-            {% block main %}{% endblock %}
+        <div class="contents">
+            <div class="box">
+                {% block main %}{% endblock %}
+            </div>
         </div>
-        <footer style="text-align:center"><a class="link" href="https://www.github.com/roxensox">Ryan Louis Hoveskeland 2023</a></footer>
+        <div class="contents" id="footer">    
+            <a class="link" href="https://www.github.com/roxensox">Ryan Louis Hoveskeland 2023</a>
+        </div>
         <script>
-        
+            var hamburger = document.querySelector(".hamburger");
+                hamburger.addEventListener("click", function(){
+                    document.querySelector("body").classList.toggle("active");
+                })
         </script>
     </body>
 </html>
