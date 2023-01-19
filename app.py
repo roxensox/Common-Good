@@ -46,22 +46,48 @@ def register():
         username = request.form.get("username")
         password = request.form.get("password")
         if not username or not password:
-            return apology("Must provide a username and password")
+            flash("Must provide a username and password")
+            return redirect("/register")
         dbsearch = select("data.db", "SELECT * FROM users WHERE username = ?", username)
-        if len(dbsearch) > 1:
-            return apology("Username taken")
+        if len(dbsearch) > 0:
+            flash('Username taken')
+            return redirect("/register")
         con, cur = connect()
         cur.execute("INSERT INTO users (username, hash, ismod) VALUES (?, ?, ?)", (username, generate_password_hash(password), "N"))
         con.commit()
+        con, cur = connect()
         return redirect("/")
     else:
         return render_template("register.html")
 
 @app.route("/login", methods=["GET","POST"])
 def log_in():
-    return apology("TODO: Login page")
+    if request.method == "POST":
+        username = request.form.get("username")
+        password = request.form.get("password")
+        if not username or not password:
+            flash("Must provide a username and password")
+            return redirect("/login")
+        dbsearch = select("data.db", "SELECT * FROM users WHERE username = ?", username)
+        if not check_password_hash(dbsearch[0]["hash"], password):
+            flash("Incorrect password")
+            return redirect("/login")
+        session["user_id"] = dbsearch[0]["id"]
+        session["username"] = username
+        flash("Session on")
+        return redirect("/")
+    else:
+        if session.get("username") != None:
+            flash ("You are already signed in.")
+            return render_template("logout.html", name=session.get("username"))    
+        return render_template("login.html")
 
 @app.route("/read", methods=["GET","POST"])
 def read():
     return apology("TODO: Read Menu")
+
+@app.route("/logout", methods=["GET"])
+def logout():
+    session.clear()
+    return redirect("/")
 

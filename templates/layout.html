@@ -55,9 +55,20 @@
                             <span class="item">Register</span>
                         </a>
                     </li>
+                    <li>
+                        <br>
+                        <br>
+                        <br>
+                    </li>
+                    <li class="last-item">
+                        <a href="/logout" class="active">
+                            <span class="icon"><i class="fa-solid fa-person-through-window"></i></span>
+                            <span class="item">Log out</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
-            <div class="content">
+            <div class="nav">
                 <div class="top_navbar">
                     <div class="hamburger">
                         <a href="#">
@@ -70,14 +81,26 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="contents">
-            <div class="box">
-                {% block main %}{% endblock %}
+            <div class="mainwrapper">    
+                {% block main %}
+                {% endblock %}
             </div>
         </div>
-        <div class="contents" id="footer">    
-            <a class="link" href="https://www.github.com/roxensox">Ryan Louis Hoveskeland 2023</a>
+        <div>
+            {% block flash %}
+                {% with messages = get_flashed_messages() %}
+                {% if messages: %}
+                    <ul class = "flashes">
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                {% endwith %}
+            {% endblock %}
+        </div>
+        <div id="footer">    
+            <a id="footerlink" href="https://www.github.com/roxensox">Ryan Louis Hoveskeland 2023</a>
         </div>
         <script>
             var hamburger = document.querySelector(".hamburger");

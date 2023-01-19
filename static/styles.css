@@ -2,57 +2,122 @@
 
 /* COLOR PALETTE GENERATED AT https://coolors.co/0d3b66-faf0ca-f4d35e-ee964b-f95738 */
 
-
+/* Universal properties */
 *{
     list-style: none;
     text-decoration: none;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Open Sans', sans-serif;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     transition: all 0.5s ease;
 }
 
+/* TEMPLATE PAGES */
+/* Template content container */
+.box{
+    background-color: #FAF0CA;
+    padding: 15px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 3px;
+}
+body.active .box{
+    margin-top: 10px;
+}
+
+.formtitle{
+    margin-bottom: 10px;
+    font-size: 25px;
+    color: #262626;
+}
+
+/* LAYOUT PAGE */
+/* .active covers the clickable links on the sidebar */
+.active {
+    text-decoration: none;
+    color: #262626;
+    transition: none;
+}
+.active:hover {
+    color: #F95738;
+}
+
+/* Body of the layout page */
 body{
     background: #0D3B66;
 }
 
-.wrapper .sidebar{
-    background: #FAF0CA;
-    position: fixed;
-    width: 225px;
-    height: 100%;
-    left: 0px;
-    border-right: solid #F95738 5px;
-    align-content: center;
+/* Top navigation bar */
+.content {
+    margin-left: 225px;
+    width: calc(100% - 225px);
 }
 
-.active {
-    text-decoration: none;
-    color: #262626;
+/* Message flashes */
+.flashes {
+    background-color: #262626;
+    position: absolute;
+    bottom: 9px;
+    left: 225px;
+    width: calc(100% - 225px);
+    text-align: center;
+    color: white;
+    height: 25px;
 }
 
-.mainlink {
-    text-decoration: none;
-    border-radius: 5%;
-    color: black;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-size: 20px;
+/* Footer */
+#footer {
+    text-align:center;
+    margin-bottom: 0;
+    background-color: #ee974b62;
+    position: absolute;
+    bottom: 0px;
+    height: 25px;
+    width: calc(100% - 225px);
+    margin-left: 225px;
 }
 
-.mainlink:hover {
-    color: red;
-}
-
-.link {
+/* Removes formatting for the footer link */
+#footerlink {
     text-decoration: none;
     color: #FAF0CA;
 }
-
-.link:hover {
+#footerlink:hover {
     color: gray;
 }
 
+/* Sign-out button in the sidebar */
+.last-item {
+    position:absolute;
+    bottom: 0;
+}
+
+/* Logo image */
+#logo {
+    display: block;
+    width: 120px;
+    height: 100px;
+    margin: 10%;
+}
+
+/* Wrapper for the template content that changes height depending on whether the top bar is active */
+.mainwrapper {
+    margin-top: 0px;
+    margin-left: 225px;
+    width: calc(100% - 225px);
+}
+
+/* Page title displayed in the top navigation bar */
+.pagetitle {
+    position: absolute;
+    left: calc(50% - 30px);
+    color: #292929;
+    visibility: hidden;
+    opacity: 0%;
+}
+
+/* Container for the logo image */
 .sitename {
     top: 0;
     padding: 10px;
@@ -68,13 +133,7 @@ body{
     vertical-align: middle;
 }
 
-#logo {
-    display: block;
-    width: 120px;
-    height: 100px;
-    margin: 10%;
-}
-
+/* Formatting for the list elements in the sidebar */
 .wrapper .sidebar ul li a {
     display: block;
     padding: 13px 30px;
@@ -83,116 +142,60 @@ body{
     font-size: 16px;
 }
 
+/* Formatting for the icons in the list elements in the sidebar */
 .wrapper .sidebar ul li a .icon {
     display: inline-block;
 }
 
-.active:hover {
-    color: #B3001B;
+.wrapper .sidebar{
+    background: #FAF0CA;
+    position: fixed;
+    width: 225px;
+    height: 100%;
+    left: 0px;
+    border-right: solid #F95738 5px;
+    align-content: center;
 }
 
-.content {
-    margin-left: 225px;
-    width: calc(100% - 225px);
-}
-
-#footer {
-    text-align:center;
-    margin-bottom: 0;
-    background-color: #ee974b62;
-    position: absolute;
-    bottom: 0px;
-    height: fit-content;
-}
-
-.registration_fields {
-    position: absolute;
-    left: 50%;
-    height: fit-content;
-    width: fit-content;
-    padding: 20px;
-    border-radius: 10%;
-    border: 2px solid #F95738;
-    background-color: #FAF0CA;
-}
-
-body.active .registration_fields{
-    position: absolute;
-    left: calc(50% - 120px);
-}
-
-button {
-    padding: 3px;
-    border-radius: 15%;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 15px;
-    background-color: #FAF0CA;
-    border-color: #F95738;
-    transition: 0.5s;
-}
-
-button:hover {
-    background-color: #F95738;
-    color: #FAF0CA;
-    transition: 0.5s;
-}
-
-.tbox {
-    padding-left: 5px;
-    border: 1px solid #F95738;
-    color: #292929;
-    background-color: rgba(255, 255, 255, 0.637);
-}
-
-.tbox:placeholder {
-    color: #faf0ca91;
-}
-
-.box {
-    top: 50px;
-    padding: 15px;
-    width: 100%;
-}
-
-.wrapper .content {
+/* Container for the top nav bar */
+.wrapper .nav {
     width: calc(100% - 225px);
     margin-left: 225px;
-    transition: all 0.5s ease;
-    
 }
-
-.contents {
-    width: calc(100% - 225px);
-    margin-left: 225px;
-    transition: all 0.5s ease;
-}
-
-.wrapper .content .top_navbar{
+.wrapper .nav .top_navbar{
     height: 50px;
     display: flex;
     align-items: center;
     padding: 0 30px;
 }
-
-.wrapper .content .top_navbar .hamburger a{
+.wrapper .nav .top_navbar .hamburger a{
     font-size: 28px;
-    color: #292929;
+    color: #9c9c9c;
+}
+.wrapper .nav .top_navbar .hamburger a:hover {
+    color: #9c9c9c5b;
 }
 
-.wrapper .content .top_navbar .hamburger a:hover {
-    color: #2929295b;
-}
+/* Active script changes */
 
-body.active .wrapper .sidebar{
-    left: -225px;
-}
-
-body.active .contents{
+/* Changes the space available for the html template */
+body.active .mainwrapper{
     margin-left: 0;
     width: 100%;
 }
 
-body.active .content{
+body.active .tempwrapper{
+    top:50px;
+}
+
+/* Resizes the footer */
+body.active #footer{
+    margin-left: 0;
+    width: 100%;
+}
+
+/* Makes the top nav bar visible */
+body.active .nav{
     margin-left: 0;
     width: 100%;
     opacity: 100%;
@@ -200,13 +203,19 @@ body.active .content{
     background: #FAF0CA;
 }
 
-body.active .pagetitle {
-    opacity: 100%;
+/* Resizes the flashed messages */
+body.active .flashes {
+    left: 0;
+    width: 100%;
 }
 
-.pagetitle {
-    position: absolute;
-    left: calc(50% - 30px);
-    color: #292929;
-    opacity: 0%;
+/* Makes the page title visible */
+body.active .pagetitle {
+    opacity: 100%;
+    visibility: visible;
+}
+
+/* Moves the sidebar off-screen */
+body.active .wrapper .sidebar{
+    left: -225px;
 }

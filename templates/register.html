@@ -10,13 +10,17 @@ Register
 
 {% block main %}
     <div class="box">
-        <div class="registration_fields">
-            <p>Registration</p>
-            <form action="/register" method="post">
-                <p><input autocomplete="off" class="tbox" type="text" name="username" placeholder="username"></p>
-                <p><input autocomplete="off" class="tbox" type="password" name="password" placeholder="password"></p>
-                <button type="submit">Register</button>
-            </form>
+        <div class="formtitle">
+            Register
         </div>
+        <form action="/register" method="post">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" name="username" placeholder="username" aria-label="username">
+                </div>
+                <div class="input-group mb-3">
+                    <input type="password" class="form-control" name="password" placeholder="password" aria-label="Recipient's username" aria-describedby="button-addon2">
+                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Register</button>
+                </div>
+        </form>
     </div>
 {% endblock %}

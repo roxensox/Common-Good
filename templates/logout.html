@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Login
+{% endblock %}
+
+{% block pagetitle %}
+You are already signed in as {{ name }}
+{% endblock %}
+
+{% block main %}
+    <div class="box">
+        <div class="fields">
+            <p class="fieldtitle">
+                Signed in
+            </p>
+            <p class="announcement">
+                You're already signed in as {{ name }}.
+            </p>
+        </div>
+    </div>
+{% endblock %}
