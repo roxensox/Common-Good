@@ -22,10 +22,9 @@ body{
     position: fixed;
     width: 225px;
     height: 100%;
-    transition: all 0.5s ease;
+    left: 0px;
     border-right: solid #F95738 5px;
     align-content: center;
-    transition: all 0.5s ease;
 }
 
 .active {
@@ -103,17 +102,23 @@ body{
     background-color: #ee974b62;
     position: absolute;
     bottom: 0px;
+    height: fit-content;
 }
 
 .registration_fields {
-    margin-left: 50%;
-    margin-top: 10%;
+    position: absolute;
+    left: 50%;
     height: fit-content;
     width: fit-content;
     padding: 20px;
     border-radius: 10%;
     border: 2px solid #F95738;
     background-color: #FAF0CA;
+}
+
+body.active .registration_fields{
+    position: absolute;
+    left: calc(50% - 120px);
 }
 
 button {
@@ -145,27 +150,24 @@ button:hover {
 
 .box {
     top: 50px;
+    padding: 15px;
     width: 100%;
-    margin-left: calc(100% - 225);
-    width: calc(100% - 30px - 225px);
 }
 
 .wrapper .content {
     width: calc(100% - 225px);
-    padding: 15px;
     margin-left: 225px;
     transition: all 0.5s ease;
+    
 }
 
 .contents {
     width: calc(100% - 225px);
-    padding: 15px;
     margin-left: 225px;
     transition: all 0.5s ease;
 }
 
 .wrapper .content .top_navbar{
-    background: rgba(247, 8, 255, 0);
     height: 50px;
     display: flex;
     align-items: center;
@@ -174,11 +176,11 @@ button:hover {
 
 .wrapper .content .top_navbar .hamburger a{
     font-size: 28px;
-    color: #f4fbff;
+    color: #292929;
 }
 
 .wrapper .content .top_navbar .hamburger a:hover {
-    color: #a2ecff;
+    color: #2929295b;
 }
 
 body.active .wrapper .sidebar{
@@ -192,5 +194,19 @@ body.active .contents{
 
 body.active .content{
     margin-left: 0;
-    width: 100%
+    width: 100%;
+    opacity: 100%;
+    border-bottom: 5px solid #F95738;
+    background: #FAF0CA;
+}
+
+body.active .pagetitle {
+    opacity: 100%;
+}
+
+.pagetitle {
+    position: absolute;
+    left: calc(50% - 30px);
+    color: #292929;
+    opacity: 0%;
 }
