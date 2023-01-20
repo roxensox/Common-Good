@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Friends
+{% endblock %}
+
+{% block pagetitle %}
+Friends
+{% endblock %}
+
+{% block main %}
+    <div class="box">
+        <p class="formtitle">Friends</p>
+    </div>
+    <div class="box">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Username</th>
+                    <th scope="col">Joined</th>
+                    <th scope="col">Posts</th>
+                    <th scope="col">Mutual</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for row in friends: %}
+            <tr class="postrow">
+                <th><form action="/usrprofile" method="post"><button type="submit" name="id" value="{{ row['id'] }}" class="proflink">{{ row["username"] }}</button></form></th>
+                <th>{{ row["join_date"] }}</th>
+                <th>{{ row["posts"] }}</th>
+                <th>{{ row["mutual"] }}</th>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

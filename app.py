@@ -251,12 +251,22 @@ def togfriend():
         flash("Friend added")
         return redirect("/friends")
 
+# Allows users to view their friends list
+@app.route("/friends", methods=["GET","POST"])
+def viewfriends():
+    # Start with a list of dictionaries for each friend, and add the appropriate information to it before loading the page
+    flist = select("data.db", "SELECT friend_id, mutual FROM connections WHERE friender_id = ?", session.get("user_id"))
+    for row in flist:
+        data = select("data.db", "SELECT username, id FROM users WHERE id = ?", (row["friend_id"]))[0]
+        row["username"] = data["username"]
+        row["id"] = data["id"]
+        data = select("data.db", "SELECT join_date FROM profiles WHERE user_id = ?", row["friend_id"])[0]
+        row["join_date"] = data["join_date"].split(' ')[0]
+        data = select("data.db", "SELECT COUNT(post_id) AS posts FROM posts WHERE user_id = ?", (row["friend_id"]))[0]
+        row["posts"] = data["posts"]
+    return render_template("friends.html", friends=flist)
+    
 # TODO: Make a settings page where users can change their username or password
 @app.route("/settings", methods=["GET", "POST"])
 def settings():
     return apology("TODO: Settings")
-
-# TODO: Allows users to view their friends list
-@app.route("/friends", methods=["GET","POST"])
-def friends():
-    return apology("TODO: Friends")
