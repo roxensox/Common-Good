@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    {{ data["title"] }}
+{% endblock %}
+
+{% block pagetitle %}
+{{ data["title"] }}
+{% endblock %}
+
+{% block main %}
+    <div class="box">
+        <div class="fields">
+            <p class="formtitle" id="reviewtitle">
+                {{ data["title"] }} - posted by {{ data["username"] }}
+            </p>
+            <p>
+                {{ data["body"] }}
+            </p>
+        </div>
+        <div class="timestamp">
+            <p>Posted: {{ time[0] }} at {{ time[1][:-3] }}</p>
+        </div>
+    </div>
+{% endblock %}

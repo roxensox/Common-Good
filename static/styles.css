@@ -15,11 +15,14 @@
 
 /* TEMPLATE PAGES */
 /* Template content container */
+
+
 .box{
     background-color: #FAF0CA;
-    padding: 15px;
+    padding: 15px 15px 8px 15px;
     margin-left: 10px;
     margin-right: 10px;
+    margin-bottom: 10px;
     border-radius: 3px;
 }
 body.active .box{
@@ -30,6 +33,70 @@ body.active .box{
     margin-bottom: 10px;
     font-size: 25px;
     color: #262626;
+}
+
+.home_title{
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.post_title{
+    width: 60%;
+    padding-left: 2px;
+}
+
+.post_body{
+    width: 90%;
+    height: 200px;
+    margin-left: 5px;
+    padding-bottom: 27%;
+    padding-top: 2px;
+    padding-left: 5px;
+    font-size: 16px;
+}
+
+.post_body_wrapper{
+    display: flex;
+    vertical-align: top;
+}
+
+#post_button{
+    width: 80px;
+    margin-left: 40px;
+    border-radius: 5%;
+    background-color: #292929;
+    border: 2px inset #F95738 ;
+}
+
+.postrow{
+    vertical-align: baseline;
+}
+
+#reviewtitle{
+    border-bottom: 5px solid #F95738;
+}
+
+#sbar{
+    width: 300px;
+    position: absolute;
+    right: 130px;
+    top: 65px;
+    transition: 0.5s ease;
+}
+
+body.active #sbar{
+    top: 80px;
+}
+
+#sbtn{
+    position: absolute;
+    right: 30px;
+    top: 65px;
+    transition: 0.5s ease;
+}
+
+body.active #sbtn{
+    top: 80px;
 }
 
 /* LAYOUT PAGE */
@@ -106,12 +173,15 @@ body{
     margin-top: 0px;
     margin-left: 225px;
     width: calc(100% - 225px);
+    color: #292929;
 }
 
 /* Page title displayed in the top navigation bar */
 .pagetitle {
     position: absolute;
-    left: calc(50% - 30px);
+    left: 70%;
+    padding-left: 10px;
+    border-left: solid 5px #F95738;
     color: #292929;
     visibility: hidden;
     opacity: 0%;
@@ -213,6 +283,7 @@ body.active .flashes {
 body.active .pagetitle {
     opacity: 100%;
     visibility: visible;
+    left: 70px;
 }
 
 /* Moves the sidebar off-screen */

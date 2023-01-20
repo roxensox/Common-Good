@@ -44,10 +44,10 @@ def select(database, query:str, query_variable=None):
         query_variable = tuple([query_variable])
 
     # Execute the select query and put all the names in a list, then get all the data as a list
-    if len(query_variable) > 1:
-        cur.execute(query, query_variable)
-    elif query_variable == None:
+    if query_variable == None:
         cur.execute(query)
+    elif len(query_variable) > 1:
+        cur.execute(query, query_variable)
     else:
         cur.execute(query, query_variable)
     names = list(map(lambda x: x[0], cur.description))

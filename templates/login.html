@@ -1,13 +1,26 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Sign-in
+    Sign In
 {% endblock %}
 
 {% block pagetitle %}
-Sign-in
+Sign In
 {% endblock %}
 
 {% block main %}
-    
+    <div class="box">
+        <div class="formtitle">
+            Sign In
+        </div>
+        <form action="/login" method="post">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" name="username" placeholder="username" aria-label="username">
+                </div>
+                <div class="input-group mb-3">
+                    <input type="password" class="form-control" name="password" placeholder="password" aria-label="Recipient's username" aria-describedby="button-addon2">
+                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Sign In</button>
+                </div>
+        </form>
+    </div>
 {% endblock %}
