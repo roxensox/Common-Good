@@ -31,11 +31,14 @@ def connect():
     except Error as e:
         print(f"The error '{e}' occurred")
 
-# Show the home page, which displays all posts chronologically
+# Show the home page, which displays all posts from friends chronologically
 @app.route("/", methods=["GET","POST"])
 def index():
-    """ Show Menu """
-    data = select("data.db","SELECT username, title, time, body, post_id, id FROM users JOIN posts ON id = user_id ORDER BY time DESC;")
+    # Filters based on friends if the user is signed in
+    if session.get("username") != None:
+        data = select("data.db","SELECT username, title, time, body, post_id, id FROM users JOIN (SELECT DISTINCT title, user_id, body, time, post_id FROM posts JOIN connections ON user_id = friend_id AND friender_id = ? OR user_id = ?) ON id = user_id ORDER BY time DESC;", (session.get("user_id"), session.get("user_id")))
+    else:
+        data = select("data.db", "SELECT username, title, time, body, post_id, id FROM users JOIN posts ON user_id = id ORDER BY time DESC;")
     for row in data:
         row["time"] = row["time"].split(' ')
     return render_template("index.html", posts=data)
@@ -238,7 +241,7 @@ def togfriend():
             cur.execute("UPDATE connections SET mutual = 'N' WHERE friender_id = ? AND friend_id = ?", (targ_id, usr_id))
             con.commit()
         flash("Friend removed")
-        return redirect("/read")
+        return redirect("/")
     else:
         # If they are not friends, add the connection. Then check if the connection is mutual, and update the database to reflect that
         cur.execute("INSERT INTO connections (friender_id, friend_id, mutual) VALUES (?, ?, 'N')", (usr_id, targ_id))
@@ -265,7 +268,7 @@ def viewfriends():
         data = select("data.db", "SELECT COUNT(post_id) AS posts FROM posts WHERE user_id = ?", (row["friend_id"]))[0]
         row["posts"] = data["posts"]
     return render_template("friends.html", friends=flist)
-    
+
 # TODO: Make a settings page where users can change their username or password
 @app.route("/settings", methods=["GET", "POST"])
 def settings():
