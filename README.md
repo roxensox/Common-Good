@@ -4,7 +4,6 @@
 
 # FEATURES STILL COMING:
 ### -Profiles
-### -Friends
 ### -Content tags
 ### -General settings
 
@@ -17,3 +16,4 @@
 ### -Search
 ### -Unfiltered homepage for signed-out users
 ### -Separate homepage for signed-in users
+### -Friends
