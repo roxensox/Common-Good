@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    {{ users["username"] }}
+{% endblock %}
+
+{% block pagetitle %}
+Profile
+{% endblock %}
+
+{% block main %}
+    <div class="prof_box">
+        <div class="small_box">
+            <img src="{{ profdata['pic_url'] }}" class="profilepic">
+        </div>
+        <div class="prof_box">
+            <div class="smaller_box">
+                <p class="prof_title">{{ users[0]['username'].capitalize() }}</p>
+            </div>
+            <p class="prof_title" id="joindate">Joined: {{ profdata['join_date'][0] }}</p>
+        </div>
+        {% if session.get("user_id") != users[0]['id'] %}
+        <p>
+            <form action="/togglefriend" method="post">
+                <button class="btn btn-dark" id="friend_button" name="toggle" type="submit" value="{{ users[0]['id'] }}">
+                    {% if friend == "Y": %}
+                        Remove Friend
+                    {% endif %}
+                    {% if friend == "N": %}
+                        Add Friend
+                    {% endif %}
+                </button>
+            </form>
+        </p>
+        {% endif %}
+    </div>
+    {% if session: %}
+    <div class="box">
+        <p class="home_title">{{ profdata['description'] }}</p>
+    </div>
+    {% endif %}
+    <div class="box">
+        <p class="prof_title">My Posts</p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Title</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Preview</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for row in posts: %}
+            <tr class="postrow">
+                <th scope="row"><form action="/review" method="post"><button class="btn btn-secondary" type="submit" name="id" value="{{ row['post_id'] }}">{{ row["title"] }}</button></form></th>
+                <th>{{ row["time"][0] }}</th>
+                <th>{{ row["body"][:30] }}...</th>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

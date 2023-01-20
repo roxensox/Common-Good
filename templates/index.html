@@ -31,9 +31,9 @@ Home
             {% for row in posts: %}
             <tr class="postrow">
                 <th scope="row"><form action="/review" method="post"><button class="btn btn-secondary" type="submit" name="id" value="{{ row['post_id'] }}">{{ row["title"] }}</button></form></th>
-                <th>{{ row["username"] }}</th>
+                <th><form action="/usrprofile" method="post"><button type="submit" name="id" value="{{ row['id'] }}" class="proflink">{{ row["username"] }}</button></form></th>
                 <th>{{ row["time"][0] }}</th>
-                <th>{{ row["body"][:20] }}...</th>
+                <th>{{ row["body"][:30] }}...</th>
             </tr>
             {% endfor %}
             </tbody>
