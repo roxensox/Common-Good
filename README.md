@@ -3,9 +3,7 @@
 ### Currently, users can register, log in, post, read other users' posts and perform basic (much too inclusive) searches on current posts.
 
 # FEATURES STILL COMING:
-### -Profiles
-### -Content tags
-### -General settings
+### -Change profile picture
 
 # FINISHED FEATURES:
 ### -Registration
@@ -17,3 +15,6 @@
 ### -Unfiltered homepage for signed-out users
 ### -Separate homepage for signed-in users
 ### -Friends
+### -Profiles
+### -Content tags
+### -Settings page for editing account information or deleting account

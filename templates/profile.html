@@ -19,7 +19,7 @@ Profile
             </div>
             <p class="prof_title" id="joindate">Joined: {{ profdata['join_date'][0] }}</p>
         </div>
-        {% if session.get("user_id") != users[0]['id'] %}
+        {% if session.get("user_id") != users[0]['id'] and session.get("user_id") != None: %}
         <p>
             <form action="/togglefriend" method="post">
                 <button class="btn btn-dark" id="friend_button" name="toggle" type="submit" value="{{ users[0]['id'] }}">

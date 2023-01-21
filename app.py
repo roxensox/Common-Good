@@ -283,5 +283,64 @@ def viewfriends():
 
 # TODO: Make a settings page where users can change their username or password
 @app.route("/settings", methods=["GET", "POST"])
+@login_required
 def settings():
-    return apology("TODO: Settings")
+    return render_template("settings.html")
+
+@app.route("/changeusername", methods=["POST"])
+def changeusr():
+    new_name = request.form.get("username")
+    data = select("data.db", "SELECT * FROM users WHERE username = ?", (new_name))
+    if not new_name:
+        flash("Must provide a new username")
+        return redirect("/settings")
+    if len(data) > 0:
+        flash("Username taken")
+        return redirect("/settings")
+    con, cur = connect()
+    cur.execute("UPDATE users SET username = ? WHERE id = ?", (new_name, session.get("user_id")))
+    con.commit()
+    flash("Username updated")
+    return redirect("/settings")
+
+@app.route("/changepassword", methods=["POST"])
+def changepw():
+    new_password = request.form.get("password")
+    old_password = select("data.db", "SELECT hash FROM users WHERE id = ?", (session.get("user_id")))[0]["hash"]
+    if not new_password:
+        flash("Must provide a new password")
+        return redirect("/settings")
+    if check_password_hash(old_password, new_password):
+        flash("New password cannot be the same as the old password")
+        return redirect("/settings")
+    con, cur = connect()
+    cur.execute("UPDATE users SET hash = ? WHERE id = ?", (generate_password_hash(new_password), session.get("user_id")))
+    con.commit()
+    flash("Password updated")
+    return redirect("/settings")
+
+@app.route("/deleteaccount", methods=["POST"])
+def deleteacc():
+    password = request.form.get("confirm")
+    passhash = select("data.db", "SELECT hash FROM users WHERE id = ?", (session.get("user_id")))[0]["hash"]
+    user_id = session.get("user_id")
+    if not password:
+        flash("Must confirm your password before deleting")
+        return redirect("/settings")
+    if check_password_hash(passhash, password):
+        con, cur = connect()
+        posts = select("data.db", "SELECT post_id FROM posts WHERE user_id = ?", (user_id))
+        if len(posts) > 0:
+            for row in posts:
+                print(row["post_id"])
+                cur.execute("DELETE FROM posts WHERE post_id = ?", (row["post_id"],))
+                cur.execute("DELETE FROM categories WHERE post_id = ?", (row["post_id"],))
+        cur.execute("DELETE FROM connections WHERE friend_id = ? OR friender_id = ?", (user_id, user_id))
+        cur.execute("DELETE FROM users WHERE id = ?", (user_id,))
+        cur.execute("DELETE FROM profiles WHERE user_id = ?", (user_id,))
+        con.commit()
+        session.clear()
+        flash("Account deleted.")
+        return redirect("/")
+    flash("Incorrect password")
+    return redirect("/settings")

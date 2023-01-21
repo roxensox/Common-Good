@@ -44,6 +44,10 @@ body.active .box{
     margin-top: 10px;
 }
 
+#delete_button{
+    margin-top: 5px;
+}
+
 .formtitle{
     margin-bottom: 10px;
     font-size: 25px;
@@ -164,6 +168,11 @@ body.active #sbar{
     right: 30px;
     top: 65px;
     transition: 0.5s ease;
+}
+
+.setting_label{
+    margin-bottom: 0;
+    margin-left: 2px;
 }
 
 .smaller_box{
