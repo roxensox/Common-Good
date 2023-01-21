@@ -24,10 +24,8 @@ def connect():
     connection = None
     try:
         connection = sqlite3.connect("data.db")
-        print("Connection to SQLite DB successful")
         cursor = connection.cursor()
         return (connection, cursor)
-
     except Error as e:
         print(f"The error '{e}' occurred")
 
@@ -331,7 +329,6 @@ def deleteacc():
         posts = select("data.db", "SELECT post_id FROM posts WHERE user_id = ?", (user_id))
         if len(posts) > 0:
             for row in posts:
-                print(row["post_id"])
                 cur.execute("DELETE FROM posts WHERE post_id = ?", (row["post_id"],))
                 cur.execute("DELETE FROM categories WHERE post_id = ?", (row["post_id"],))
         cur.execute("DELETE FROM connections WHERE friend_id = ? OR friender_id = ?", (user_id, user_id))
