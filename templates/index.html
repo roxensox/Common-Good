@@ -25,6 +25,7 @@ Home
                     <th scope="col">Author</th>
                     <th scope="col">Date</th>
                     <th scope="col">Preview</th>
+                    <th scope="col">Category</th>
                 </tr>
             </thead>
             <tbody>
@@ -34,6 +35,7 @@ Home
                 <th><form action="/usrprofile" method="post"><button type="submit" name="id" value="{{ row['id'] }}" class="proflink">{{ row["username"] }}</button></form></th>
                 <th>{{ row["time"][0] }}</th>
                 <th>{{ row["body"][:30] }}...</th>
+                <th>{{ row["category"] }}</th>
             </tr>
             {% endfor %}
             </tbody>

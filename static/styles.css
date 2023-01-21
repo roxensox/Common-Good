@@ -16,6 +16,20 @@
 /* TEMPLATE PAGES */
 /* Template content container */
 
+.write_titlecontainer{
+    display: flex;
+}
+
+.addcat{
+    margin-left: 5px;
+    margin-right: 5px;
+    width: 20%;
+    padding-left: 2px;
+}
+
+.category_selector{
+    margin-right: 28px;
+}
 
 .box{
     background-color: #FAF0CA;
@@ -60,6 +74,7 @@ body.active #friend_button{
 .post_title{
     width: 60%;
     padding-left: 2px;
+    margin-left: 5px;
 }
 
 .post_body{

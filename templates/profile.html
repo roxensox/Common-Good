@@ -47,6 +47,7 @@ Profile
                     <th scope="col">Title</th>
                     <th scope="col">Date</th>
                     <th scope="col">Preview</th>
+                    <th scope="col">Category</th>
                 </tr>
             </thead>
             <tbody>
@@ -55,6 +56,7 @@ Profile
                 <th scope="row"><form action="/review" method="post"><button class="btn btn-secondary" type="submit" name="id" value="{{ row['post_id'] }}">{{ row["title"] }}</button></form></th>
                 <th>{{ row["time"][0] }}</th>
                 <th>{{ row["body"][:30] }}...</th>
+                <th>{{ row["category"] }}</th>
             </tr>
             {% endfor %}
             </tbody>

@@ -36,9 +36,9 @@ def connect():
 def index():
     # Filters based on friends if the user is signed in
     if session.get("username") != None:
-        data = select("data.db","SELECT username, title, time, body, post_id, id FROM users JOIN (SELECT DISTINCT title, user_id, body, time, post_id FROM posts JOIN connections ON user_id = friend_id AND friender_id = ? OR user_id = ?) ON id = user_id ORDER BY time DESC;", (session.get("user_id"), session.get("user_id")))
+        data = select("data.db","SELECT username, title, time, body, post_id, id, category FROM users JOIN ( SELECT * FROM categories JOIN (SELECT DISTINCT title, user_id, body, time, post_id AS pid FROM posts JOIN connections ON user_id = friend_id AND friender_id = ? OR user_id = ?) ON post_id = pid) ON id = user_id ORDER BY time DESC;", (session.get("user_id"), session.get("user_id")))
     else:
-        data = select("data.db", "SELECT username, title, time, body, post_id, id FROM users JOIN posts ON user_id = id ORDER BY time DESC;")
+        data = select("data.db", "SELECT username, title, time, body, post_id, id, category FROM users JOIN (SELECT * FROM posts JOIN categories ON posts.post_id = categories.post_id) ON user_id = id ORDER BY time DESC;")
     for row in data:
         row["time"] = row["time"].split(' ')
     return render_template("index.html", posts=data)
@@ -129,7 +129,7 @@ def read():
         pids = []
         for term in search:
             term = f"%{term}%"
-            temp = select("data.db", "SELECT * FROM posts JOIN users ON id = user_id WHERE title LIKE (?) OR username LIKE (?) ORDER BY time DESC;", (term, term))
+            temp = select("data.db", "SELECT * FROM users JOIN (SELECT * FROM posts JOIN categories ON posts.post_id = categories.post_id) ON id = user_id WHERE title LIKE (?) OR username LIKE (?) ORDER BY time DESC;", (term, term))
             for post in temp:
                 if post["post_id"] not in pids:
                     post["time"] = post["time"].split(' ')
@@ -138,7 +138,7 @@ def read():
         return render_template("read.html", posts=data)
     # When the user enters this page through a link, they get all posts ordered chronologically
     else:
-        data = select("data.db", "SELECT * FROM posts JOIN users ON id = user_id ORDER BY time DESC;")
+        data = select("data.db", "SELECT * FROM users JOIN (SELECT * FROM posts JOIN categories ON  posts.post_id = categories.post_id) ON id = user_id ORDER BY time DESC;")
         for post in data:
             post["time"] = post["time"].split(' ')
         return render_template("read.html", posts=data)
@@ -159,6 +159,12 @@ def write_post():
         title = request.form.get("title")
         bodytext = request.form.get("body")
         user_id = session.get("user_id")
+        new_category = request.form.get("addcat")
+        category = request.form.get("category")
+        if not new_category and not category:
+            category = "general"
+        if new_category:
+            category = new_category
         ts = time()
         timestamp = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
         if not title:
@@ -170,10 +176,15 @@ def write_post():
         con, cur = connect()
         cur.execute("INSERT INTO posts (user_id, title, body, time) VALUES (?, ?, ?, ?)", (user_id, title, bodytext, timestamp))
         con.commit()
+        con, cur = connect()
+        post_id = select("data.db", "SELECT post_id FROM posts WHERE user_id = ? ORDER BY time LIMIT 1", (user_id))[0]["post_id"]
+        cur.execute("INSERT INTO categories VALUES (?, ?);", (post_id, category))
+        con.commit()
         flash("Post submitted")
         return redirect("/write")
     else:
-        return render_template("write.html")
+        data = select("data.db", "SELECT DISTINCT category FROM categories")
+        return render_template("write.html", categories=data)
 
 # Allows the user to view a single post
 @app.route("/review", methods=["POST"])
@@ -194,7 +205,7 @@ def view():
 def profile():
     # Load three lists of dictionaries (users, posts, and profdata) to draw information from for the profile page
     users = select("data.db", "SELECT * FROM users WHERE id = ?;", (session.get("user_id")))
-    posts = select("data.db", "SELECT * FROM posts WHERE user_id = ? ORDER BY time DESC;", (session.get("user_id")))
+    posts = select("data.db", "SELECT * FROM posts JOIN categories ON posts.post_id = categories.post_id WHERE user_id = ? ORDER BY time DESC;", (session.get("user_id")))
     # Check to make sure that the user has posted before attempting to format the timestamps
     if len(posts) > 0:
         for row in posts:
@@ -209,8 +220,9 @@ def profile():
 def usrprofile():
     # Check to make sure the user isn't trying to view their own profile indirectly
     targ_id = request.form.get("id")
-    if int(request.form.get("id")) == int(session.get("user_id")):
-        return redirect("/myprofile")
+    if session.get("user_id") != None:
+        if int(request.form.get("id")) == int(session.get("user_id")):
+            return redirect("/myprofile")
     # Initialize the value of friend to reflect that the users are not friends, and then check in the database to see if they are friends
     friend = "N"
     if len(select("data.db", "SELECT * FROM connections WHERE friender_id = ? AND friend_id = ?", (session.get("user_id"), targ_id))) > 0:
@@ -220,7 +232,7 @@ def usrprofile():
     profdata = select("data.db", "SELECT * FROM profiles WHERE user_id = ?", (targ_id))
     profdata = profdata[0]
     profdata["join_date"] = profdata["join_date"].split(' ')
-    posts = select("data.db", "SELECT * FROM posts WHERE user_id = ?", (targ_id))
+    posts = select("data.db", "SELECT * FROM posts JOIN categories ON posts.post_id = categories.post_id WHERE user_id = ?", (targ_id))
     for row in posts:
         row["time"] = row["time"].split(' ')    
     return render_template("profile.html", users=users, profdata=profdata, posts=posts, friend = friend)

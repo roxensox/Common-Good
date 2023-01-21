@@ -16,8 +16,19 @@ Write New Post
             </p>
             <form action="/write" method="post">
                 <p>
-                    <label class="plaintext">Title:</label>
-                    <input name="title" placeholder="Your title" type="text" autocomplete="off" class="post_title">
+                    <div class="write_titlecontainer">
+                        <label class="plaintext">Title:</label>
+                        <input name="title" placeholder="Your title" type="text" autocomplete="off" class="post_title">
+                        <input class="addcat" placeholder="New category" name="addcat" type="text"></input>
+                        <select class="category_selector" name="category">
+                            <option selected disabled>
+                                Category
+                            </option>
+                            {% for option in categories %}
+                            <option>{{ option["category"] }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
                 </p>
                 <p class="post_body_wrapper">
                     <label class="plaintext">Post:</label>
