@@ -75,7 +75,7 @@ def register():
         # Make a timestamp to initialize a blank profile
         ts = time()
         timestamp = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
-        cur.execute("INSERT INTO profiles (user_id, pic_url, join_date) VALUES (?, ?, ?)", (id_num, 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Mr._Smiley_Face.svg/1024px-Mr._Smiley_Face.svg.png', timestamp))
+        cur.execute("INSERT INTO profiles (user_id, pic_url, join_date) VALUES (?, ?, ?)", (id_num, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5zjHGydxteBYChYUS7ZyQSveSrqHHhyA4yw&usqp=CAU', timestamp))
         con.commit()
 
         # Get the user's username to set the session
@@ -154,7 +154,6 @@ def logout():
 @login_required
 def write_post():
     if request.method == "POST":
-        
         # Gets the information submitted by the user and adds it to the database if everything was done correctly
         title = request.form.get("title")
         bodytext = request.form.get("body")
@@ -177,7 +176,7 @@ def write_post():
         cur.execute("INSERT INTO posts (user_id, title, body, time) VALUES (?, ?, ?, ?)", (user_id, title, bodytext, timestamp))
         con.commit()
         con, cur = connect()
-        post_id = select("data.db", "SELECT post_id FROM posts WHERE user_id = ? ORDER BY time LIMIT 1", (user_id))[0]["post_id"]
+        post_id = select("data.db", "SELECT post_id FROM posts WHERE user_id = ? ORDER BY time DESC LIMIT 1", (user_id))[0]["post_id"]
         cur.execute("INSERT INTO categories VALUES (?, ?);", (post_id, category))
         con.commit()
         flash("Post submitted")
@@ -344,3 +343,31 @@ def deleteacc():
         return redirect("/")
     flash("Incorrect password")
     return redirect("/settings")
+
+@app.route("/changepic", methods=["POST"])
+@login_required
+def changepic():
+    url = request.form.get("new_url")
+    if not url:
+        flash("Must provide a url for your new picture")
+        return redirect("/myprofile")
+    con, cur = connect()
+    cur.execute("UPDATE profiles SET pic_url = ? WHERE user_id = ?", (url, session.get("user_id")))
+    con.commit()
+    flash("Picture updated")
+    return redirect("/myprofile")
+
+@app.route("/changedescription", methods=["POST"])
+@login_required
+def changedesc():
+    description = request.form.get("new_description")
+    if not description:
+        flash("For a blank description, write [BLANK] for the description.")
+        return redirect("/myprofile")
+    if description == "[BLANK]":
+        description = ''
+    con, cur = connect()
+    cur.execute("UPDATE profiles SET description = ? WHERE user_id = ?", (description, session.get("user_id")))
+    con.commit()
+    flash("Description updated.")
+    return redirect("/myprofile")

@@ -27,10 +27,6 @@
     padding-left: 2px;
 }
 
-.category_selector{
-    margin-right: 28px;
-}
-
 .box{
     background-color: #FAF0CA;
     padding: 15px 15px 8px 15px;
@@ -42,6 +38,47 @@
 }
 body.active .box{
     margin-top: 10px;
+}
+.category_selector{
+    margin-right: 28px;
+}
+
+#desc_btn{
+    height: 30px;
+    width: fit-content;
+    font-size: 11px;
+    margin-bottom: 3px;
+}
+
+#desc_input{
+    padding-left: 2px;
+}
+
+#pic_change{
+    position: absolute;
+    top: 135px;
+    left: 355px;
+    height: 30px;
+    width: fit-content;
+    font-size: 11px;
+    transition: 0.5s ease;
+}
+body.active #pic_change{
+    left: 180px;
+    top: 155px;
+}
+
+.profile_picurl{
+    position: absolute;
+    top: 136px;
+    left: 460px;
+    padding-left: 2px;
+    width: 307px;
+    max-width: 80%;
+}
+body.active .profile_picurl{
+    left: 180px;
+    top: 190px;
 }
 
 #delete_button{
@@ -187,6 +224,10 @@ body.active .smaller_box{
 
 body.active #sbtn{
     top: 80px;
+}
+
+.update_description{
+    margin-bottom: 0;
 }
 
 /* LAYOUT PAGE */

@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    {{ users["username"] }}
+    {{ users[0]["username"] }}
 {% endblock %}
 
 {% block pagetitle %}
@@ -33,10 +33,28 @@ Profile
             </form>
         </p>
         {% endif %}
+        {% if session.get("user_id") == users[0]['id']: %}
+        <p class="write_titlecontainer">
+            <form action="/changepic" method="post">
+                <button class="btn btn-dark" id="pic_change" name="changepic" type="submit">Update Picture</button>
+                <input autocomplete="off" class="profile_picurl" type="text" name="new_url" placeholder="https://www.yournewpic.com/picfile.png">
+            </form>
+        </p>
+        {% endif %}
     </div>
     {% if session: %}
     <div class="box">
         <p class="home_title">{{ profdata['description'] }}</p>
+        {% if session.get("user_id") == users[0]['id'] %}    
+        <form action="/changedescription" method="post">
+            <p class="update_description">
+                <label>
+                    <button id="desc_btn" type="submit" class="btn btn-dark">Update Description</button>
+                </label>
+                <input autocomplete="off" id="desc_input" name="new_description" placeholder="new description">
+            </p>
+        </form>
+        {% endif %}
     </div>
     {% endif %}
     <div class="box">
