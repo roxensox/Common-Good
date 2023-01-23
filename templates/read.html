@@ -15,6 +15,17 @@ Read
             <input autocomplete="off" type="text" id="sbar" class="form-control" name="search" placeholder="Search" aria-label="search">
             <button id="sbtn" class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
         </form>
+        <form action="/filter" method="post">
+            <select class="category_selector" name="category">
+                <option selected disabled>
+                    Category
+                </option>
+                {% for option in categories %}
+                <option>{{ option["category"] }}</option>
+                {% endfor %}
+            </select>
+            <button class="btn btn-dark" type="submit">Filter</button>
+        </form>
     </div>
     <div class="box">
         <table class="table">

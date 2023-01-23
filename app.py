@@ -123,6 +123,7 @@ def read():
     if request.method == "POST":
         search = request.form.get("search")
         search = search.split(' ')
+        categories = select("data.db", "SELECT DISTINCT category FROM categories;")
         data = []
         pids = []
         for term in search:
@@ -133,13 +134,14 @@ def read():
                     post["time"] = post["time"].split(' ')
                     pids.append(post["post_id"])
                     data.append(post)
-        return render_template("read.html", posts=data)
+        return render_template("read.html", posts=data, categories=categories)
     # When the user enters this page through a link, they get all posts ordered chronologically
     else:
         data = select("data.db", "SELECT * FROM users JOIN (SELECT * FROM posts JOIN categories ON  posts.post_id = categories.post_id) ON id = user_id ORDER BY time DESC;")
+        categories = select("data.db", "SELECT DISTINCT category FROM categories;")
         for post in data:
             post["time"] = post["time"].split(' ')
-        return render_template("read.html", posts=data)
+        return render_template("read.html", posts=data, categories=categories)
 
 # Logs the user out
 @app.route("/logout", methods=["GET"])
@@ -368,3 +370,10 @@ def changedesc():
     con.commit()
     flash("Description updated.")
     return redirect("/myprofile")
+
+@app.route("/filter", methods=["POST"])
+def filter_posts():
+    category = request.form.get("category")
+    categories = select("data.db", "SELECT DISTINCT category FROM categories;")
+    data = select("data.db", "SELECT * FROM users JOIN (SELECT * FROM posts JOIN categories ON  posts.post_id = categories.post_id) ON id = user_id WHERE category = ? ORDER BY time DESC;", (category))
+    return render_template("read.html", posts=data, categories=categories)
