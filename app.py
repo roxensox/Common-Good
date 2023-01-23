@@ -376,4 +376,6 @@ def filter_posts():
     category = request.form.get("category")
     categories = select("data.db", "SELECT DISTINCT category FROM categories;")
     data = select("data.db", "SELECT * FROM users JOIN (SELECT * FROM posts JOIN categories ON  posts.post_id = categories.post_id) ON id = user_id WHERE category = ? ORDER BY time DESC;", (category))
+    for row in data:
+        row["time"] = row["time"].split(' ')
     return render_template("read.html", posts=data, categories=categories)
