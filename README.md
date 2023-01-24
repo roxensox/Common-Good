@@ -20,3 +20,4 @@ Common.Good is a very basic social media site for organizing recommendations fro
 #### -Content tags
 #### -Settings page for editing account information or deleting account
 #### -Change profile picture
+#### -Filter posts by tags
