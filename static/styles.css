@@ -269,8 +269,8 @@ body{
     text-align:center;
     margin-bottom: 0;
     background-color: #ee974b62;
-    position: absolute;
-    bottom: 0px;
+    position: fixed;
+    bottom: 0vh;
     height: 25px;
     width: calc(100% - 225px);
     margin-left: 225px;
